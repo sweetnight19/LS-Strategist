@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
-int opcio,id,ipv,cx,boxes;
-char pluja;
+#define ABECEDARIO 26
+
+int opcio,id,ipv,cx,boxes, dorsal, carrera, digit_1, digit_2;
+char pluja, lletra;
 
 void main(){
 	printf("Bienvenido a LS Strategist!\n\n");
