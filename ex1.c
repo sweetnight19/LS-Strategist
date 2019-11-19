@@ -92,7 +92,7 @@ void main(){
 					scanf("%d", &dorsal);
 				}
 
-				printf("\nCual es el número de la carrera en el calendario?");
+				printf("\nCual es el número de la carrera en el calendario? ");
 				scanf("%d", &carrera);
 
 				while (carrera < 1 || carrera > 21) //num carrera incorrecto
