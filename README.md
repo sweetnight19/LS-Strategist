@@ -5,4 +5,4 @@ Práctica Fundamentos de programación
       
    
    
-   · Implementat la fase 1.
+             · Implementat la fase 1.
