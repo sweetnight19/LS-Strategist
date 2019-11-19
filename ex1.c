@@ -80,7 +80,31 @@ void main(){
 				printf("\n\n");
 				break;
 			case 2:
-				
+				printf("\nCual es el numero de dorsal del piloto con quien se quiere comunicar? ");
+				scanf("%d", &dorsal);
+
+				while (dorsal < 1 || dorsal > 99) //dorsal incorrecto
+				{
+					printf("\nERROR: Has introducido un valor inválido.\n");
+					printf("\nCual es el número de dorsal del piloto con quien se quiere comunicar? ");
+					scanf("%d", &dorsal);
+				}
+
+				printf("\nCual es el número de la carrera en el calendario?");
+				scanf("%d", &carrera);
+
+				while (carrera < 1 || carrera > 21) //num carrera incorrecto
+				{
+					printf("\nERROR: Has introducido un valor inválido.\n");
+					printf("\nCual es el número de la carrera en el calendario? ");
+					scanf("%d", &carrera);
+				}
+
+				digit_1 = dorsal / carrera;
+				digit_2 = dorsal / ABECEDARIO;
+				lletra = dorsal % ABECEDARIO + 'A' - 1; // Guardar la letra del abecedario correspondiente, se resta 1 para que no se pase una posición
+
+				printf("\nCODIGO GENERADO: %c%d%d\n", lletra, digit_1, digit_2);
 				break;
 			case 3:
 				break;
