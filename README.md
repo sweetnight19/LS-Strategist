@@ -14,4 +14,5 @@ Práctica Fundamentos de programación
 	. Implementació de la fase 3. (No s'ha probat encara que el seu funcionament sigui l'esperat)
 
 -> actualització (14/12/2019)
-	. Diferents errors que apareixien a la fase 3 anteriorment han sigut corretgits, peró queda un error final que resta de ser 		corretgit.
+	
+	. Diferents errors que apareixien a la fase 3 anteriorment han sigut corretgits, peró queda un error final que resta de ser corretgit.
