@@ -42,11 +42,11 @@ int menu(){
 	int opcio;
 
 	printf("Por favor, escoge una opción del menu:\n\n");
-	printf("    1. Estraegia de neumáticos\n");
-	printf("    2. Obtención del código de radio\n");
-	printf("    3. Comunicarse con el piloto\n");
-	printf("    4. Simular carrera\n");
-	printf("    5. Salir\n\n");
+	printf("\t1. Estraegia de neumáticos\n");
+	printf("\t2. Obtención del código de radio\n");
+	printf("\t3. Comunicarse con el piloto\n");
+	printf("\t4. Simular carrera\n");
+	printf("\t5. Salir\n\n");
 	printf("Opción seleccionada: ");
 	scanf("%d",&opcio);
 	return opcio;
