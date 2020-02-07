@@ -1,5 +1,5 @@
 # LS-Strategist
-Práctica Fundamentos de programación
+Práctica Fundamentos de programación (main.c)
 
 -> actualització (07/02/20)
 
