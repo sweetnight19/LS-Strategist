@@ -153,7 +153,10 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
         if(strcmp(radio,"exit")==0){
             return 0;
         }else{
+            printf("Codigo valido!\n");
+            printf("Comunicandose con el piloto #%d en la carrera #%d..\n\n",usuari.dorsal,usuari.numCarrera);
             //CODIGO
+            //printf("Introduzca la informacion: ");
             return 1;
         }
     }
@@ -169,6 +172,8 @@ void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera){
             if(ok3==0){
                 printf("ERROR: Aun no has enviado ninguna informacion al piloto\n\n");
             }else{
+                printf("Simulando carrera..\n\n");
+                printf("Resultados:\n\n");
                 //CODIGO
             }
         }
