@@ -40,8 +40,8 @@ int estrategiaDeNeumaticos(Usuari *usuari){
 
     printf("Asistente de estrategia de neumaticos:\n");
     do{
-        printf("\nEsá lloviendo sobre la pista? (S/N): ");
-        scanf("%c",&pluja);
+        printf("\nEsta lloviendo sobre la pista? (S/N): ");
+        scanf("\n%c",&pluja);
         if(pluja!='S'&&pluja!='s'&&pluja!='N'&&pluja!='n'){
             printf("ERROR: Por favor, introduzca S/s o N/n\n");
         }
@@ -104,7 +104,6 @@ int estrategiaDeNeumaticos(Usuari *usuari){
 }
 
 int codigoDeRadio(Usuari *usuari){
-    int digit_1,digit_2;
 
     do{
         printf("Cual es el numero de dorsal del piloto con quien se quiere comunicar? ");
@@ -163,6 +162,7 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
 }
 
 void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera){
+
     if(ok1==0){
         printf("ERROR: Aun no has configurado la estrategia de neumaticos\n\n");
     }else{
