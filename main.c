@@ -2,6 +2,8 @@
 #include <string.h>
 #include <math.h>
 
+#define TEXT 500
+
 typedef struct{
 	char dia[2];
 	char mes[2];
@@ -137,7 +139,10 @@ int codigoDeRadio(Usuari *usuari){
 }
 
 int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
-    char radio[5];
+	int i = 0, pilot = 0, x = 0;
+	int error = 0; // error es posa a 1 si hi ha un error en la cadena
+	int imensaje = 0;
+	char radio[5], mensaje[TEXT];
 
     if(ok2==0){
         printf("ERROR: Aun no se ha generado ningun codigo de cifrado para la radio\n");
