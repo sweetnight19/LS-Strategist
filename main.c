@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define TEXT 500
@@ -138,11 +139,11 @@ int codigoDeRadio(Usuari *usuari){
     return 1;
 }
 
-int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
-	int i = 0, pilot = 0, x = 0;
-	int error = 0; // error es posa a 1 si hi ha un error en la cadena
-	int imensaje = 0;
-	char radio[5], mensaje[TEXT];
+Carrera comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2,int *ok3){
+    int i = 0, pilot = 0, x = 0;
+    int error = 0; // error es posa a 1 si hi ha un error en la cadena
+    int imensaje = 0;
+    char radio[5], mensaje[TEXT];
 
     if(ok2==0){
         printf("ERROR: Aun no se ha generado ningun codigo de cifrado para la radio\n");
@@ -153,9 +154,10 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
             if (strcmp(radio,"exit")!=0 && strcmp(radio, usuari.radio) != 0) {
                 printf("ERROR: Este codigo de radio no existe\n");
             }
-         }while(strcmp(radio,"exit")!=0&&strcmp(radio,usuari.radio)!=0);
+        }while(strcmp(radio,"exit")!=0&&strcmp(radio,usuari.radio)!=0);
         if(strcmp(radio,"exit")==0){
-            return 0;
+            *ok3=0;
+            return carrera;
         }else{
             printf("Codigo valido!\n");
             printf("Comunicandose con el piloto #%d en la carrera #%d..\n\n",usuari.dorsal,usuari.numCarrera);
@@ -164,17 +166,17 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
             fgets (mensaje, TEXT, stdin);
             fgets (mensaje, TEXT, stdin);
 
-    /*--------------------------------------------------------------------
-                INICIALIZACIÓN DE VARIABLES INT A 0
-    --------------------------------------------------------------------*/
+            /*--------------------------------------------------------------------
+                        INICIALIZACIÓN DE VARIABLES INT A 0
+            --------------------------------------------------------------------*/
             carrera.numCarrera = 0;
             carrera.ID = 0;
             carrera.numVoltes = 0;
             carrera.numPilot = 0;
 
-    /* -----------------------------------------------
-                EXTRAER EL MENSAJE
-    ------------------------------------------------*/
+            /* -----------------------------------------------
+                        EXTRAER EL MENSAJE
+            ------------------------------------------------*/
 
             do { //Extracción general del mensaje
 
@@ -191,77 +193,62 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
                 }
 
                 i++;
-    //------------------------------------------------------------------------------------------------------------------
-                printf("\n\tDespues numero carrera");
-
+                //------------------------------------------------------------------------------------------------------------------
                 while (mensaje[i] != '|') {
                     carrera.ID = mensaje[i] - '0';
                     i++;
-                    
+
                 }
 
-    //------------------------------------------------------------------------------------------------------------------
+                //------------------------------------------------------------------------------------------------------------------
                 printf("\nCarrera ID: %d", carrera.ID);
-
                 i++;
-    //------------------------------------------------------------------------------------------------------------------
-                printf("\n\tDespues Indice Degradacion\n");
+                //------------------------------------------------------------------------------------------------------------------
                 while (mensaje[i] != '|') {
                     carrera.pluja = mensaje[i];
                     i++;
                     printf("\nLluvia: %c", carrera.pluja);
                 }
-
                 i++;
-    //------------------------------------------------------------------------------------------------------------------
-                printf("\n\tDespues lluvia\n");
+                //------------------------------------------------------------------------------------------------------------------
                 while (mensaje[i] != '|') {
                     carrera.numVoltes = carrera.numVoltes * 10 + (mensaje[i] -'0');
                     i++;
                 }
-    //------------------------------------------------------------------------------------------------------------------
+                //------------------------------------------------------------------------------------------------------------------
                 printf("\nNumero vueltas Carrera: %d", carrera.numVoltes);
 
                 i++;
-    //------------------------------------------------------------------------------------------------------------------
-                printf("\n\tDespues numero vueltas\n");
+                //------------------------------------------------------------------------------------------------------------------
                 while (mensaje[i] != '|')
                 {
                     carrera.numPilot = carrera.numPilot * 10 + (mensaje[i] - '0');
                     i++;
                 }
-
-    //------------------------------------------------------------------------------------------------------------------
+                //------------------------------------------------------------------------------------------------------------------
                 printf("\nNum pilots: %d", carrera.numPilot);
-
-    //------------------------------------------------------------------------------------------------------------------
-                printf("\n\tDespues Numero pilotos\n");
-
+                //------------------------------------------------------------------------------------------------------------------
                 i++;
-
+                pilot=0;
                 do {// Extracción de pilotos
                     while (mensaje[i] != '|' && mensaje[i] != '\0') {
-                        
                         carrera.pilot[pilot].dorsal = 0;
                         while (mensaje[i] != '-') {
                             carrera.pilot[pilot].dorsal = carrera.pilot[pilot].dorsal * 10 + (mensaje[i] - '0');
                             i++;
                         }
-
                         i++;
-    //------------------------------------------------------------------------------------------------------------------
+                        //------------------------------------------------------------------------------------------------------------------
                         printf("\nDorsal pilot: %d", carrera.pilot[pilot].dorsal);
-
+                        x=0;
                         while (mensaje[i] != '-') {
                             carrera.pilot[pilot].nom[x] = mensaje[i];
                             i++;
                             x++;
                         }
-
                         i++;
                         carrera.pilot[pilot].nom[x] = '\0';
                         x = 0;
-
                         /*-----------------------------------------------------------------------------
                                         DEBUG
                             -----------------------------------------------------------------------------*/
@@ -272,42 +259,31 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
                             i++;
                             x++;
                         }
-
                         i++;
                         carrera.pilot[pilot].aniversari.dia[x] = '\0';
                         x = 0;
-
                         printf ("\n\tDia aniversario piloto: %s\n", carrera.pilot[pilot].aniversari.dia);
-
                         while (mensaje[i] != '/') {
                             carrera.pilot[pilot].aniversari.mes[x] = mensaje[i];
                             i++;
                             x++;
                         }
-
                         i++;
                         carrera.pilot[pilot].aniversari.mes[x] = '\0';
                         x = 0;
-
                         printf ("\n\tMes aniversario piloto: %s\n", carrera.pilot[pilot].aniversari.mes);
-
                         while (mensaje[i] != '-') {
                             carrera.pilot[pilot].aniversari.any[x] = mensaje[i];
                             i++;
                             x++;
                         }
-
                         i++;
                         carrera.pilot[pilot].aniversari.any[x] = '\0';
                         x = 0;
-
-                        printf ("\n\tAño aniversario piloto: %s\n", carrera.pilot[pilot].aniversari.any);
-
+                        printf ("\n\tAno aniversario piloto: %s\n", carrera.pilot[pilot].aniversari.any);
                         /*-----------------------------------------------------------------------------
                                     DEBUG
                         -----------------------------------------------------------------------------*/
-                        printf("\n\tAntes comprobación fecha\n");
-
                         if (carrera.pilot[pilot].aniversari.mes == 02) {
                             if (carrera.pilot[pilot].aniversari.dia > 01 && carrera.pilot[pilot].aniversari.dia < 28) {
                                 error = 0;
@@ -317,60 +293,62 @@ int comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2){
                                 -----------------------------------------------------------------------*/
                             }
                         }
-
                         while (mensaje[i] != '-') {
                             carrera.pilot[pilot].compost[x] = mensaje[i];
                             i++;
                             x++;
                         }
-
                         i++;
                         carrera.pilot[pilot].compost[x] = '\0';
                         x = 0;
-
-    //--------------------------------------------------------------------------------------------------------------
+                        //--------------------------------------------------------------------------------------------------------------
                         printf ("\n\tCompost: %s\n", carrera.pilot[pilot].compost);
-
                         carrera.pilot[pilot].numParadas = 0;
-
                         while (mensaje[i] != '-') {
                             carrera.pilot[pilot].numParadas = carrera.pilot[pilot].numParadas * 10 + (mensaje[i] - '0');
                             i++;
                         }
-
-    //--------------------------------------------------------------------------------------------------------------
+                        //--------------------------------------------------------------------------------------------------------------
                         printf ("\n\tNumero de parades: %d", carrera.pilot[pilot].numParadas);
                         if (carrera.pilot[pilot].numParadas < 1 || carrera.pilot[pilot].numParadas > 10) {
                             error = 1;
                         }
-
-                        while (mensaje[i] != '/' && mensaje[i] != '\0' && mensaje[i]!= '|') {
+                        x=0;
+                        i++;
+                        while (mensaje[i] != '\0' && mensaje[i]!= '|') {
                             carrera.pilot[pilot].numVoltaParada[x] = 0;
-                            carrera.pilot[pilot].numVoltaParada[x] = carrera.pilot[pilot].numVoltaParada[x] * 10 + (mensaje[i] - '0');
+                            carrera.pilot[pilot].numVoltaParada[x] = mensaje[i] - '0';
                             i++;
                             x++;
-
-    //--------------------------------------------------------------------------------------------------------------
-                            printf ("\n\tNum Volta Parada %d: %d", x, carrera.pilot[pilot].numVoltaParada);
+                            if(mensaje[i]=='/'){
+                                i++;
+                            }
+                            if(mensaje[i]!='\0'){
+                                printf ("\n\tNum Volta Parada %d: %d", x, carrera.pilot[pilot].numVoltaParada[x-1]);
+                            }
+                            //--------------------------------------------------------------------------------------------------------------
                         }
                     }
-
                     if (mensaje[i] == '|') {
                         pilot++;
+                        i++;
                         /*-----------------------------------------------------------------------------
                                         DEBUG
                         -----------------------------------------------------------------------------*/
                         printf("\n\tPiloto++");
                     }
                 } while (mensaje[i] != '\0');
-                
             } while (mensaje[i] != '\0');
-            return 1;
+            *ok3=1;
+            printf("\n\nInformacion validada y enviada correctamente\n");
+            return carrera;
         }
     }
 }
 
-void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera){
+void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera, Usuari usuari){
+    int i,j,a,b,c,d,e;
+    float resultat[20],posibilitats,max;
 
     if(ok1==0){
         printf("ERROR: Aun no has configurado la estrategia de neumaticos\n\n");
@@ -383,7 +361,56 @@ void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera){
             }else{
                 printf("Simulando carrera..\n\n");
                 printf("Resultados:\n\n");
-                //CODIGO
+                i=0;
+                d=carrera.numPilot;
+                do{
+                    if(usuari.compost[0]=='I'&&carrera.pilot[i].compost[0]!=usuari.compost[0]){
+                        a=1;
+                    }
+                    if(usuari.compost[0]=='W'&&carrera.pilot[i].compost[0]=='C'){
+                        a=2;
+                    }
+                    if(usuari.compost[0]=='W'&&carrera.pilot[i].compost[0]=='I'){
+                        a=1;
+                    }
+                    if(usuari.compost[0]=='C'&&carrera.pilot[i].compost[0]=='C'){
+                        if(usuari.compost[1]==carrera.pilot[i].compost[1]){
+                            a=0;
+                        }else{
+                            a=abs(usuari.compost[1]-carrera.pilot[i].compost[1]);
+                        }
+
+                    }
+                    b=usuari.paradas-carrera.pilot[i].numParadas;
+                    c=i;
+                    e=rand()%8;
+                    posibilitats=100-sqrt(abs(pow(a,2)+pow(b,2)))-abs(cos(((c/d)*100*2/3)+(1/3*e))*40);
+                    resultat[i]=posibilitats;
+                    printf("%d. %s (%.2f)\n",i+1,carrera.pilot[i].nom,posibilitats);
+                    i++;
+                }while(i<carrera.numPilot);
+                i=0;
+                max=0.0;
+                do{
+                    if(resultat[i]>max){
+                        max=resultat[i];
+                        j=i;
+                    }
+                    i++;
+                }while(i<carrera.numPilot);
+                printf("\n\n");
+                printf("    |       |\n");
+                printf("    |       |\n");
+                printf("    |       |\n");
+                printf("    |       |\n");
+                printf("    |       |\n");
+                printf("     |     |\n");
+                printf("     |     |\n");
+                printf("    |       |\n");
+                printf("    |   #1  |\n");
+                printf(" ---------------\n\n");
+                printf("Enhorabuena %s!\n\n",carrera.pilot[j].nom);
+
             }
         }
     }
@@ -424,10 +451,10 @@ void main(){
 				ok2=codigoDeRadio(&usuari);
 				break;
 			case 3:
-				ok3=comunicarseConElPiloto(carrera,usuari,ok2);
+				carrera=comunicarseConElPiloto(carrera,usuari,ok2,&ok3);
 				break;
 			case 4:
-				simularCarrera(ok1,ok2,ok3,carrera);
+				simularCarrera(ok1,ok2,ok3,carrera,usuari);
 				break;
 		}
 	}while(opcio!=5);
