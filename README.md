@@ -12,4 +12,6 @@ Práctica Fundamentos de programación (main.c)
 	· Corregit dorsal dels Pilots.
 	. Implementació de la fase 4 (Cal comprobar amb fase 3).
 	
-	
+-> actualització (17/02/2020)
+	. Implementació de comprobació d'errors.
+	. Error crític en la comprobació de la data de naixament (provoca un crash).
