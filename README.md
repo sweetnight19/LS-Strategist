@@ -16,3 +16,8 @@ Práctica Fundamentos de programación (main.c)
 
 	. Implementació de comprobació d'errors.
 	. Error crític en la comprobació de la data de naixament (provoca un crash).
+
+-> actualització (18/02/2020)
+
+	. Implementació del fitxer MakeFile.
+	. Afegit el fitxer Test.txt per tenir proves a mà per testejar el software.
