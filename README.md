@@ -23,4 +23,5 @@ Práctica Fundamentos de programación (main.c)
 	. Afegit el fitxer Test.txt per tenir proves a mà per testejar el software.
 
 -> actualització (21/02/2020)
+
 	. Correcció dels errors que estaven presents a la fase 3 que provocaven que el programa fes crash.
