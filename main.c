@@ -1,10 +1,22 @@
+/*******************************
+ *
+ * @Proposito:LS-Strategist
+ * @Autores: David Marquet, Joan Casals
+ * @Fecha creacion: 14/12/2019
+ * @Fecha última modificacion: 02/05/2020
+ *
+ ******************************/
+
+//Librerias del sistema
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 
+//Constantes
 #define TEXT 500
 
+//Tipos propios
 typedef struct{
 	char dia[2];
 	char mes[2];
@@ -37,6 +49,13 @@ typedef struct {
     char radio[5];
 }Usuari;
 
+/****************************
+ *
+ * @Finalidad: Selecionar el mejor compuesto segun condiciones de pista
+ * @Parametros: Usuario *usuario = estructura pasada por referencia
+ * @Retorno: Retorna un ok de que se ha realizado
+ *
+ ***************************/
 int estrategiaDeNeumaticos(Usuari *usuari){
     char pluja;
     int id,ipv,cx;
@@ -106,6 +125,14 @@ int estrategiaDeNeumaticos(Usuari *usuari){
     return 1;
 }
 
+/****************************
+ *
+ * @Finalidad: Generar codigo de radio para el usuario
+ * @Parametros: suario *usuario = estructura pasada por referencia
+ * @Retorno: Retorna un ok de que se ha realizado
+ *
+ ***************************/
+
 int codigoDeRadio(Usuari *usuari){
 
     do{
@@ -138,6 +165,17 @@ int codigoDeRadio(Usuari *usuari){
     printf("\nCODIGO GENERADO: %s\n",(*usuari).radio);
     return 1;
 }
+
+/****************************
+ *
+ * @Finalidad: Introducir informacion del campeonato y los pilotos
+ * @Parametros: Carrera carrera = estructura que luego devolverá rellenada
+ *              Usuarui usario = Necesario para comparar el codigo de radio
+ *              int ok2 = Comprobacion de que se ha generado el codigo de radio del piloto
+ *              int *ok3 = Pasado por referencia para la verificacion de la siguiente fase
+ * @Retorno: Retorna la estructura carrera con la informacion de todo el campeonato
+ *
+ ***************************/
 
 Carrera comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2,int *ok3){
     int i = 0, pilot = 0, x = 0, any = 0, mes = 0, dia = 0;
@@ -428,11 +466,23 @@ Carrera comunicarseConElPiloto(Carrera carrera,Usuari usuari,int ok2,int *ok3){
                 } while (mensaje[i] != '\0');
             } while (mensaje[i] != '\0');
             *ok3 = 1;
-            printf("\n\nInformacion validada y enviada correctamente\n");
+            printf("\nInformacion validada y enviada correctamente\n\n");
             return carrera;
         }
     }
 }
+
+/****************************
+ *
+ * @Finalidad: Realizar la carrera
+ * @Parametros: int ok1 = Comprobacion de la primera fase realizada
+ *              int ok2 = Comprobacion de la segona fase realizada
+ *              int ok3 = Comprobacion de la tercera fase realizada
+ *              Carrera carrera = Estructura necesaria con la informacion del gran premio
+ *              Usuari usuari = Estructura con la informacion del usuario
+ * @Retorno: No retorna nada
+ *
+ ***************************/
 
 void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera, Usuari usuari){
     int i,j,a,b,c,d,e;
@@ -504,6 +554,13 @@ void simularCarrera(int ok1,int ok2,int ok3,Carrera carrera, Usuari usuari){
     }
 }
 
+/****************************
+ *
+ * @Finalidad: Printar por pantalla las opciones disponibles
+ * @Retorno: Retorna la opcion escogida por el usuario
+ *
+ ***************************/
+
 int menu(){
 	int opcio;
 
@@ -518,6 +575,7 @@ int menu(){
 	return opcio;
 }
 
+//Procedimiento principal
 void main(){
 	int opcio,ok1=0,ok2=0,ok3=0;
 	Carrera carrera;
