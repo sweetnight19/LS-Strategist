@@ -128,7 +128,7 @@ int estrategiaDeNeumaticos(Usuari *usuari){
 /****************************
  *
  * @Finalidad: Generar codigo de radio para el usuario
- * @Parametros: suario *usuario = estructura pasada por referencia
+ * @Parametros: Usuario *usuario = estructura pasada por referencia
  * @Retorno: Retorna un ok de que se ha realizado
  *
  ***************************/
@@ -170,7 +170,7 @@ int codigoDeRadio(Usuari *usuari){
  *
  * @Finalidad: Introducir informacion del campeonato y los pilotos
  * @Parametros: Carrera carrera = estructura que luego devolverá rellenada
- *              Usuarui usario = Necesario para comparar el codigo de radio
+ *              Usuario usario = Necesario para comparar el codigo de radio
  *              int ok2 = Comprobacion de que se ha generado el codigo de radio del piloto
  *              int *ok3 = Pasado por referencia para la verificacion de la siguiente fase
  * @Retorno: Retorna la estructura carrera con la informacion de todo el campeonato
