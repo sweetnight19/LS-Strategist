@@ -1,5 +1,5 @@
-1|2|n|10|2|1-KasillEgo-29/02/2000-C4-2-4/8|40-SiempreVanPrimero-01/12/1997-C4-1-6
+1|4|n|9|2|1-KasillEgo-29/02/2000-C4-2-4/8|40-SiempreVanPrimero-01/12/1997-C4-1-6
 
 15|0|n|8|6|44-Lewis Hamilton-07/01/1985-C4-2-4/8|5-Sebastian Vettel-03/07/1987-C1-1-6|33-Max Verstappen-30/09/1997-C3-3-1/7/8|55-Carlos Sainz-01/09/1994-W-1-8|26-Daniel Kvyat-26/04/1994-I-2-2/5|7-Kimi Raikkonen-17/10/1979-W-1-4
 
-1|2|n|10|2|1-Kasill Ego-29/02/2000-C4-2-4/8|40-Siempre VanPrimero-01/12/1997-C4-1-6
+1|2|s|10|2|1-Kasill Ego-29/02/2000-C4-2-4/8|40-Siempre VanPrimero-01/12/1997-C4-1-6
