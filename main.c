@@ -230,7 +230,8 @@ Carrera comunicarseConElPiloto(Carrera carrera, Usuari usuari, int ok2, int *ok3
                 carrera.numVoltes = 0;
                 carrera.numPilot = 0;
 
-                while (mensaje[i] != '\0' || error == 0) { //Extracción general del mensaje
+                while (mensaje[i] != '\0' && error == 0) { //Extracción general del mensaje
+                    error = 0;
                     carrera.numCarrera = 0;
                     while (mensaje[i] != '|' && error == 0) {
                         imensaje = mensaje[i] - '0';
@@ -238,8 +239,8 @@ Carrera comunicarseConElPiloto(Carrera carrera, Usuari usuari, int ok2, int *ok3
                         i++;
                     }
 
-                    if (carrera.numCarrera < 1 || carrera.numCarrera > 21) {
-                        //*ok3 = 0;
+                    if (!(carrera.numCarrera >= 1 && carrera.numCarrera <= 21)) {
+                        //ok3 = 0;
                         error = 1;
                         printf("\nERROR: Numero de carrera incorrecto!\n");
                         //return carrera;
@@ -247,95 +248,109 @@ Carrera comunicarseConElPiloto(Carrera carrera, Usuari usuari, int ok2, int *ok3
 
                     i++;
 
-                    while (mensaje[i] != '|' && error == 0) {
-                        carrera.ID = carrera.ID * 10 + mensaje[i] - '0';
-                        i++;
-                    }
+                    if(error == 0){
+                        while (mensaje[i] != '|') {
+                            carrera.ID = carrera.ID * 10 + mensaje[i] - '0';
+                            i++;
+                        }
 
-                    if (carrera.ID < 0 || carrera.ID > 4) {
-                        //*ok3 = 0;
-                        error = 1;
-                        printf("\nERROR: El Indice de Degradacion de la carrera es incorrecto!\n");
-                        //return carrera;
-                    }
+                        printf("\nIndice de Degradación: %d", carrera.ID);
 
-                    i++;
-
-                    while (mensaje[i] != '|' && error == 0) {
-                        carrera.pluja = mensaje[i];
-                        i++;
-                    }
-
-                    if (carrera.pluja != 's' && carrera.pluja != 'S' && carrera.pluja != 'n' && carrera.pluja != 'N') {
-                        //*ok3 = 0;
-                        error = 1;
-                        printf("\nERROR: La lluvia no es correcta! (Introducir s/S o n/N)\n");
-                        //return carrera;
+                        if (carrera.ID < 0 || carrera.ID > 4) {
+                            error = 1;
+                            printf("\nERRPR: El Indice de Degradacion de la carrera es incorrecto!\n");
+                            carrera.ID = 0;
+                        }
                     }
 
                     i++;
 
-                    while (mensaje[i] != '|' && error == 0) {
-                        carrera.numVoltes = carrera.numVoltes * 10 + (mensaje[i] - '0');
-                        i++;
-                    }
+                    printf("\nDespues if id\n");
 
-                    if (carrera.numVoltes < 1 || carrera.numVoltes > 10) {
-                        //*ok3 = 0;
-                        error = 1;
-                        printf("\nERROR: El numero de vueltas indicada no es correcto!\n");
-                        //return carrera;
+                    printf("\nMensaje[i] = %c", mensaje[i]);
+
+                    if(error == 0){
+                        while (mensaje[i] != '|') {
+                            carrera.pluja = mensaje[i];
+                            i++;
+                        }
+
+                        if (!(carrera.pluja == 's' || carrera.pluja == 'S' || carrera.pluja == 'n' || carrera.pluja == 'N')) {
+                            //ok3 = 0;
+                            error = 1;
+                            printf("\nERROR: La lluvia no es correcta! (Introducir s/S o n/N)\n");
+                            //return carrera;
+                        }
                     }
 
                     i++;
 
-                    while (mensaje[i] != '|' && error == 0) {
-                        carrera.numPilot = carrera.numPilot * 10 + (mensaje[i] - '0');
-                        i++;
+                    if(error == 0){
+                        while (mensaje[i] != '|') {
+                            carrera.numVoltes = carrera.numVoltes * 10 + (mensaje[i] - '0');
+                            i++;
+                        }
+
+                        if (carrera.numVoltes < 1 || carrera.numVoltes > 10) {
+                            //ok3 = 0;
+                            error = 1;
+                            printf("\nERROR: El numero de vueltas indicada no es correcto!\n");
+                            carrera.numVoltes = 0;
+                        }
                     }
 
-                    if (carrera.numPilot < 2 || carrera.numPilot > 20) {
-                        //*ok3 = 0;
-                        error = 1;
-                        printf("\nERROR: El numero de pilotos no es correcto!\n");
-                        //return carrera;
+                    i++;
+
+                    if(error == 0){
+                        while (mensaje[i] != '|') {
+                            carrera.numPilot = carrera.numPilot * 10 + (mensaje[i] - '0');
+                            i++;
+                        }
+
+                        if (carrera.numPilot < 2 || carrera.numPilot > 20) {
+                            error = 1;
+                            printf("\nERROR: El numero de pilotos no es correcto!\n");
+                            carrera.numPilot = 0;
+                        }
                     }
 
                     i++;
                     pilot = 0;
                     do {// Extracción de pilotos
                         while (mensaje[i] != '|' && mensaje[i] != '\0') {
+                            printf("\nerror: %d\n",error);
                             carrera.pilot[pilot].dorsal = 0;
-                            while (mensaje[i] != '-' && error == 0) {
-                                carrera.pilot[pilot].dorsal = carrera.pilot[pilot].dorsal * 10 + (mensaje[i] - '0');
-                                i++;
-                            }
+                            if(error == 0){
+                                while (mensaje[i] != '-') {
+                                    carrera.pilot[pilot].dorsal = carrera.pilot[pilot].dorsal * 10 + (mensaje[i] - '0');
+                                    i++;
+                                }
 
-                            if (carrera.pilot[pilot].dorsal < 1 || carrera.pilot[pilot].dorsal > 99) {
-                                //*ok3 = 0;
-                                error = 1;
-                                printf("\nERROR: El dorsal del piloto no es valido!\n");
-                                //return carrera;
-                            }
+                                if (carrera.pilot[pilot].dorsal < 1 || carrera.pilot[pilot].dorsal > 99) {
+                                    error = 1;
+                                    printf("\nERROR: El dorsal del piloto no es valido!\n");
+                                    carrera.pilot[pilot].dorsal = 0;
+                                }}
 
                             i++;
 
                             x = 0;
 
-                            while (mensaje[i] != '-' && error == 0) {
-                                carrera.pilot[pilot].nom[x] = mensaje[i];
-                                i++;
-                                x++;
+                            if(error == 0){
+                                while (mensaje[i] != '-' && error == 0) {
+                                    carrera.pilot[pilot].nom[x] = mensaje[i];
+                                    i++;
+                                    x++;
+                                }
+
+                                carrera.pilot[pilot].nom[x] = '\0';
+
+                                if (strlen(carrera.pilot[pilot].nom) > 25) {
+                                    error = 1;
+                                    printf("\nERROR: El nombre del piloto no es correcto!\n");
+                                }
                             }
 
-                            carrera.pilot[pilot].nom[x] = '\0';
-
-                            if (strlen(carrera.pilot[pilot].nom) > 25) {
-                                //*ok3 = 0;
-                                error = 1;
-                                printf("\nERROR: El nombre del piloto no es correcto!\n");
-                                //return carrera;
-                            }
 
                             i++;
                             x = 0;
@@ -433,13 +448,12 @@ Carrera comunicarseConElPiloto(Carrera carrera, Usuari usuari, int ok2, int *ok3
                                 }
                             }
 
-                            if (error_fecha == 1) {
-                                //*ok3 = 0;
-                                error = 1;
-                                printf("\nERROR: Fecha introducida incorrecta!\n");
-                                //return carrera;
+                            if(error == 0){
+                                if (error_fecha == 1) {
+                                    error = 1;
+                                    printf("\nERROR: Fecha introducida incorrecta!\n");
+                                }
                             }
-
                             while (mensaje[i] != '-' && error == 0) {
                                 carrera.pilot[pilot].compost[x] = mensaje[i];
                                 i++;
@@ -451,40 +465,46 @@ Carrera comunicarseConElPiloto(Carrera carrera, Usuari usuari, int ok2, int *ok3
                             x = 0;
 
                             carrera.pilot[pilot].numParadas = 0;
-                            while (mensaje[i] != '-' && error == 0) {
-                                carrera.pilot[pilot].numParadas =
-                                        carrera.pilot[pilot].numParadas * 10 + (mensaje[i] - '0');
-                                i++;
-                            }
 
-                            if (carrera.pilot[pilot].numParadas < 1 || carrera.pilot[pilot].numParadas > 10) {
-                                //*ok3 = 0;
-                                error = 1;
-                                printf("\nERROR: Numero de paradas incorrecto!\n");
-                                //return carrera;
+                            if(error == 0){
+                                while (mensaje[i] != '-' && error == 0) {
+                                    carrera.pilot[pilot].numParadas =
+                                            carrera.pilot[pilot].numParadas * 10 + (mensaje[i] - '0');
+                                    i++;
+                                }
+
+                                if (carrera.pilot[pilot].numParadas < 1 || carrera.pilot[pilot].numParadas > 10) {
+                                    //*ok3 = 0;
+                                    error = 1;
+                                    printf("\nERROR: Numero de paradas incorrecto!\n");
+                                    //return carrera;
+                                }
                             }
 
                             x = 0;
                             i++;
 
-                            while (mensaje[i] != '\0' && mensaje[i] != '|' && error == 0) {
-                                carrera.pilot[pilot].numVoltaParada[x] = 0;
-                                carrera.pilot[pilot].numVoltaParada[x] = mensaje[i] - '0';
-                                i++;
-
-                                if (mensaje[i] == '/') {
+                            if(error == 0){
+                                while (mensaje[i] != '\0' && mensaje[i] != '|' && error == 0) {
+                                    carrera.pilot[pilot].numVoltaParada[x] = 0;
+                                    carrera.pilot[pilot].numVoltaParada[x] = mensaje[i] - '0';
                                     i++;
-                                    x++;
+
+                                    if (mensaje[i] == '/') {
+                                        i++;
+                                        x++;
+                                    }
+                                }
+
+                                if ((x + 1) != carrera.pilot[pilot].numParadas) {
+                                    //*ok3 = 0;
+                                    error = 1;
+                                    printf("\nError: numero de paradas no coinciden\n");
+                                    //return carrera;
                                 }
                             }
-
-                            if ((x + 1) != carrera.pilot[pilot].numParadas) {
-                                //*ok3 = 0;
-                                error = 1;
-                                printf("\nError: numero de paradas no coinciden\n");
-                                //return carrera;
-                            }
                         }
+
                         if (mensaje[i] == '|') {
                             pilot++;
                             i++;
@@ -493,6 +513,14 @@ Carrera comunicarseConElPiloto(Carrera carrera, Usuari usuari, int ok2, int *ok3
                             any = 0;
                         }
                     } while (mensaje[i] != '\0' && error == 0);
+
+                    if(error == 1) { //Si s'ha detectat un error, es demana tornar a introduir la informacio i es posa la variable "i" a 0 per començar desde l'inici de la cadena per asegurar que no sortim del while
+                        printf("Informacion erronea; introduzca la informacion: ");
+                        fgets(mensaje, TEXT, stdin);
+
+                        i = 0;
+                        error = 0;
+                    }
                 }
                 printf("error: %d\n",error);
             }
